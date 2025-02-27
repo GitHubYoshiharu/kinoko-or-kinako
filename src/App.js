@@ -137,6 +137,7 @@ const Question = memo(function Question({ answer, numOfQuestions, insertedQuesti
   const qStyle = {
     position: 'absolute',
     userSelect: 'none',
+    whiteSpace: 'nowrap', // スマホ環境だとなぜかテキストが要素からはみ出るので、応急処置
     lineHeight: `${fontSize}px`,
     height: `${qHeight}px`,
     width: `${qWidth}px`,
