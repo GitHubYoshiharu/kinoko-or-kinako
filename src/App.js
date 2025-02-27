@@ -73,12 +73,11 @@ const CurrentTime = memo(function CurrentTime({ timerState }) {
 });
 
 // answerだけだと、前回と同じ値が代入されてpropsの値が更新されない可能性がある。
-const Question = memo(function Question({ answer, numOfQuestions }) {
+const Question = memo(function Question({ answer, numOfQuestions, insertedQuestionAnime }) {
   // 親要素のサイズを取得する
   const containerRect = document.getElementById('questionContainer').getBoundingClientRect();
   const cWidth = containerRect.width;
   const cHeight = containerRect.height;
-  const insertedQuestionAnime = useRef(false);
 
   // 回転させすぎると見えなくなるので注意
   const rotateDeg = getRandomInt(4, 48) * 45;
@@ -182,6 +181,8 @@ export default function App() {
   const [answer, setAnswer] = useState(0);
   const [numOfQuestions, setNumOfQuestions] = useState(0);
   const [numOfMiss, setNumOfMiss] = useState(0);
+  // Questionコンポーネントはゲームが終わる度に破棄されるので、代わりにrefの値を保持しておく。
+  const insertedQuestionAnime = useRef(false);
 
   const startGame = () => {
     setStartedGame(true);
@@ -221,7 +222,7 @@ export default function App() {
     <div className="App">
       <div id="questionContainer">
         {startedGame && 
-          <Question answer={answer} numOfQuestions={numOfQuestions} />}
+          <Question answer={answer} numOfQuestions={numOfQuestions} insertedQuestionAnime={insertedQuestionAnime}/>}
       </div>
       {timerState === null &&
         <div className="explain">
