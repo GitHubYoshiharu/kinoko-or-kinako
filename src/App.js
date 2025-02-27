@@ -188,6 +188,7 @@ export default function App() {
     setTimerState('start');
     decideNextAnswer();
     setNumOfQuestions(30);
+    setNumOfMiss(0);
   };
 
   // 正誤判定のために、answerはApp側で保持していなければならない
