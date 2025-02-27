@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/kinoko-or-kinako/static/css/main.d5c96440.css",
-    "main.js": "/kinoko-or-kinako/static/js/main.37edced0.js",
+    "main.js": "/kinoko-or-kinako/static/js/main.06def847.js",
     "static/js/453.f3b5bac0.chunk.js": "/kinoko-or-kinako/static/js/453.f3b5bac0.chunk.js",
     "index.html": "/kinoko-or-kinako/index.html",
     "main.d5c96440.css.map": "/kinoko-or-kinako/static/css/main.d5c96440.css.map",
-    "main.37edced0.js.map": "/kinoko-or-kinako/static/js/main.37edced0.js.map",
+    "main.06def847.js.map": "/kinoko-or-kinako/static/js/main.06def847.js.map",
     "453.f3b5bac0.chunk.js.map": "/kinoko-or-kinako/static/js/453.f3b5bac0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d5c96440.css",
-    "static/js/main.37edced0.js"
+    "static/js/main.06def847.js"
   ]
 }
