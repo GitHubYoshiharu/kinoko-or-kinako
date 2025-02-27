@@ -76,6 +76,7 @@ const CurrentTime = memo(function CurrentTime({ timerState }) {
 const Question = memo(function Question({ answer, numOfQuestions, insertedQuestionAnime }) {
   // 親要素のサイズを取得する
   const containerRect = document.getElementById('questionContainer').getBoundingClientRect();
+  // 正方形なのでどちらも同じ値になるが、コードの分かりやすさのために両方取得する。
   const cWidth = containerRect.width;
   const cHeight = containerRect.height;
 
@@ -93,19 +94,17 @@ const Question = memo(function Question({ answer, numOfQuestions, insertedQuesti
   ][getRandomInt(0, 7)];
   const isHorizontal = (getRandomInt(0, 1) === 0) ? true : false;
   // 座標計算のために要素のサイズが欲しいので、フォントサイズから要素のサイズを決定する
-  const fontSize = getRandomInt(5, 50) * 2 + 20;
-  let qWidth = (isHorizontal) ? fontSize*3 : fontSize;
-  let qHeight = (isHorizontal) ? fontSize : fontSize*3;
-  // コンテナサイズはビューポートに依存しているので、Questionサイズがコンテナサイズを超える可能性がある
-  qWidth = (qWidth > cWidth) ? cWidth : qWidth;
-  qHeight = (qHeight > cHeight) ? cHeight : qHeight;
+  // コンテナサイズはビューポートサイズに依存しているので、そこからはみ出ないようにコンテナサイズを基に算出する
+  const fontSize = getRandomInt(Math.floor(cWidth/18), Math.floor(cWidth/3));
+  const qWidth = (isHorizontal) ? fontSize*3 : fontSize;
+  const qHeight = (isHorizontal) ? fontSize : fontSize*3;
   // コンテナからはみ出たQuestionの大きさを考慮する
   const distanceX = (startPosition[0] === 0.5) ? 0
                   : (startPosition[0] === 0) ? cWidth + qWidth : -(cWidth + qWidth);
   const distanceY = (startPosition[1] === 0.5) ? 0
                   : (startPosition[1] === 0) ? cHeight + qHeight : -(cHeight + qHeight);
   // アニメを動的に置き換える（アニメ名はそれぞれ変えないと、上書きした時に途中から再生されてしまう）
-  // ビルドされるとCSSファイルがマージされ、空のスタイルは削除されるので、上書き戦法は使えない。
+  // ビルド時に空のスタイルは削除されるので、定義しておいた空の@keyframesを上書きするという手段は取れない。
   const appCssRules = document.styleSheets[0];
   if(insertedQuestionAnime.current) {
     appCssRules.deleteRule(0);
@@ -178,6 +177,7 @@ const Question = memo(function Question({ answer, numOfQuestions, insertedQuesti
 export default function App() {
   const [timerState, setTimerState] = useState(null);
   const [startedGame, setStartedGame] = useState(false);
+  // 正誤判定のために、answerはApp側で保持していなければならない
   const [answer, setAnswer] = useState(0);
   const [numOfQuestions, setNumOfQuestions] = useState(0);
   const [numOfMiss, setNumOfMiss] = useState(0);
@@ -192,7 +192,6 @@ export default function App() {
     setNumOfMiss(0);
   };
 
-  // 正誤判定のために、answerはApp側で保持していなければならない
   const decideNextAnswer = () => {
     const answerIndicator = getRandomInt(1, 100);
     if(answerIndicator <= 43) { // きのこ

@@ -6,12 +6,12 @@
   display: grid;
   justify-items: center; /* 水平方向 */
   align-content: center; /* 垂直方向 */
-  row-gap: 7px;
+  row-gap: 1vh;
 }
 
 .explain {
   font-size: 18px;
-  margin-bottom: 7px;
+  margin-bottom: 1vh;
   justify-items: center;
 }
 
@@ -23,14 +23,28 @@
 #questionContainer {
   position: relative;
   background-color: black;
-  height: 75vh;
-  width: 75vh;
   overflow: hidden;
-  margin: 0 auto 5px;
+  margin: 0 auto 0.8vh;
+}
+
+/* 画面が横長の場合 */
+@media (orientation: landscape) {
+  #questionContainer {
+    height: 75vh;
+    width: 75vh;
+  }
+}
+
+/* 画面が縦長の場合 */
+@media (orientation: portrait) {
+  #questionContainer {
+    height: 75vw;
+    width: 75vw;
+  }
 }
 
 .startButton {
-  height: calc(10px + 5vh);
+  height: calc(16px + 4vh);
   width: fit-content;
   padding-inline: 1em 1em;
   font-size: 16px;
@@ -42,14 +56,14 @@
 }
 
 .buttons > button {
-  height: calc(14px + 5vh);
+  height: calc(18px + 4vh);
   width: fit-content;
   font-size: 18px;
   padding-inline: 0.7em 0.7em;
 }
 
 .buttons > button:nth-of-type(2) {
-  margin: 0 10px;
+  margin: 0 0.8vw;
 }
 
 @keyframes perfect {
