@@ -78,6 +78,7 @@ const Question = memo(function Question({ answer, numOfQuestions }) {
   const containerRect = document.getElementById('questionContainer').getBoundingClientRect();
   const cWidth = containerRect.width;
   const cHeight = containerRect.height;
+  const insertedQuestionAnime = useRef(false);
 
   // 回転させすぎると見えなくなるので注意
   const rotateDeg = getRandomInt(4, 48) * 45;
@@ -105,9 +106,14 @@ const Question = memo(function Question({ answer, numOfQuestions }) {
   const distanceY = (startPosition[1] === 0.5) ? 0
                   : (startPosition[1] === 0) ? cHeight + qHeight : -(cHeight + qHeight);
   // アニメを動的に置き換える（アニメ名はそれぞれ変えないと、上書きした時に途中から再生されてしまう）
-  let appStyleSheet = document.styleSheets[1];
-  appStyleSheet.deleteRule(0);
-  appStyleSheet.insertRule(`
+  // ビルドされるとCSSファイルがマージされ、空のスタイルは削除されるので、上書き戦法は使えない。
+  const appCssRules = document.styleSheets[0];
+  if(insertedQuestionAnime.current) {
+    appCssRules.deleteRule(0);
+  } else {
+    insertedQuestionAnime.current = true;
+  }
+  appCssRules.insertRule(`
     @keyframes anime${numOfQuestions} {
       from {
         transform: translate(0) rotate3d(${axis[0]}, ${axis[1]}, ${axis[2]}, 0deg);

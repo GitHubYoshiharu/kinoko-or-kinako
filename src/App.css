@@ -1,6 +1,3 @@
-/* スクリプトから簡単に参照できるように1番上に記述する */
-@keyframes anime {}
-
 .App {
   background-color: #282c34;
   height: 100vh;
